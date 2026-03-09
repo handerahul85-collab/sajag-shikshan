@@ -1,0 +1,1648 @@
+<index.html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="सजग शिक्षण">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="description" content="सजग शिक्षण — विद्यार्थी उपस्थिती व्यवस्थापन प्रणाली | © प्रो. डॉ. राहुल हांडे">
+<title>सजग शिक्षण - उपस्थिती नोंद</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1a2e; --paper:#f5f0e8; --saffron:#ff6b35; --deep:#c94a1a;
+  --gold:#e8b84b; --green:#2d8a4e; --red:#c0392b; --blue:#2471a3;
+  --purple:#7b52ab; --light:#faf7f2; --border:#d4c5a9; --sh:rgba(26,26,46,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+
+/* HEADER */
+header{background:var(--ink);color:white;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px var(--sh);}
+.header-stripe{height:5px;background:linear-gradient(90deg,var(--saffron),var(--gold),#27ae60);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;gap:12px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.logo{width:46px;height:46px;background:linear-gradient(135deg,var(--saffron),var(--gold));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.brand-text h1{font-size:1.3rem;font-weight:900;letter-spacing:.3px;}
+.brand-text .sub{font-size:.7rem;opacity:.55;font-family:'Space Mono',monospace;letter-spacing:.5px;}
+.date-pill{background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18);padding:6px 14px;border-radius:999px;font-family:'Space Mono',monospace;font-size:.75rem;color:var(--gold);white-space:nowrap;}
+.creator-tag{font-size:.65rem;opacity:.45;text-align:right;font-family:'Space Mono',monospace;line-height:1.4;}
+
+/* NAV */
+.nav-tabs{display:flex;background:#0d0d20;padding:0 22px;overflow-x:auto;scrollbar-width:none;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nav-tab{padding:11px 17px;font-family:'Noto Sans Devanagari',sans-serif;font-size:.84rem;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap;}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.nav-tab:hover:not(.active){color:rgba(255,255,255,.8);}
+
+/* LAYOUT */
+main{max-width:980px;margin:0 auto;padding:24px 16px;}
+.panel{display:none;}
+.panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* CARDS */
+.card{background:white;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:18px;box-shadow:0 2px 12px var(--sh);}
+.card-header{padding:14px 20px;background:var(--light);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.card-title{font-weight:700;font-size:.96rem;display:flex;align-items:center;gap:8px;}
+
+/* FORM */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:16px 20px;}
+@media(max-width:560px){.form-row{grid-template-columns:1fr;}}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg.full{grid-column:1/-1;}
+label{font-size:.78rem;font-weight:600;color:#555;}
+select,input,textarea{padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'Noto Sans Devanagari',sans-serif;font-size:.92rem;background:white;color:var(--ink);transition:border-color .2s,box-shadow .2s;}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,107,53,.12);}
+textarea{resize:vertical;min-height:115px;line-height:1.75;}
+
+/* BUTTONS */
+.btn{padding:10px 20px;border-radius:10px;font-family:'Noto Sans Devanagari',sans-serif;font-size:.89rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--saffron);color:white;}
+.btn-primary:hover{background:var(--deep);transform:translateY(-1px);}
+.btn-success{background:var(--green);color:white;}
+.btn-success:hover{filter:brightness(1.1);}
+.btn-outline{background:transparent;color:var(--saffron);border:1.5px solid var(--saffron);}
+.btn-outline:hover{background:var(--saffron);color:white;}
+.btn-red{background:transparent;color:var(--red);border:1.5px solid var(--red);}
+.btn-red:hover{background:var(--red);color:white;}
+.btn-blue{background:var(--blue);color:white;}
+.btn-blue:hover{filter:brightness(1.1);}
+.btn-purple{background:var(--purple);color:white;}
+.btn-purple:hover{filter:brightness(1.1);}
+.btn-sm{padding:7px 13px;font-size:.81rem;}
+
+/* STATS */
+.stats-bar{display:flex;gap:11px;margin-bottom:20px;flex-wrap:wrap;}
+.stat-card{flex:1;min-width:105px;background:white;border:1.5px solid var(--border);border-radius:14px;padding:13px 15px;text-align:center;box-shadow:0 2px 8px var(--sh);}
+.stat-num{font-size:1.9rem;font-weight:900;line-height:1;font-family:'Space Mono',monospace;}
+.stat-lbl{font-size:.73rem;color:#888;margin-top:4px;}
+.stat-card.g .stat-num{color:var(--green);}
+.stat-card.r .stat-num{color:var(--red);}
+.stat-card.b .stat-num{color:var(--blue);}
+.stat-card.o .stat-num{color:var(--saffron);}
+.prog-wrap{height:6px;background:#eee;border-radius:999px;margin-top:8px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--saffron),var(--gold));transition:width .4s ease;}
+
+/* ATTENDANCE LIST */
+.att-controls{padding:13px 20px;border-bottom:1.5px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.s-list{padding:7px 20px 14px;max-height:60vh;overflow-y:auto;}
+.s-row{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:12px;margin:5px 0;border:1.5px solid var(--border);transition:all .18s;}
+.s-row.present{border-color:var(--green);background:rgba(45,138,78,.06);}
+.s-row.absent{border-color:var(--red);background:rgba(192,57,43,.06);}
+.s-info{display:flex;align-items:center;gap:10px;}
+.s-av{width:35px;height:35px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0;}
+.s-name{font-weight:600;font-size:.91rem;}
+.s-roll{font-size:.73rem;color:#888;font-family:'Space Mono',monospace;}
+.tog-wrap{display:flex;gap:6px;}
+.tog{width:38px;height:38px;border-radius:50%;border:2px solid;font-size:.9rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;background:white;letter-spacing:0;}
+.tog-p{border-color:var(--green);color:var(--green);}
+.tog-p.on{background:var(--green);color:white;}
+.tog-a{border-color:var(--red);color:var(--red);}
+.tog-a.on{background:var(--red);color:white;}
+
+/* CLASS TABS */
+.cls-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:13px 20px;border-bottom:1.5px solid var(--border);}
+.cls-tab{padding:7px 17px;border-radius:999px;border:1.5px solid var(--border);font-size:.84rem;font-weight:600;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;background:white;color:#666;transition:all .2s;}
+.cls-tab.active{background:var(--ink);color:white;border-color:var(--ink);}
+.cls-tab:hover:not(.active){border-color:var(--saffron);color:var(--saffron);}
+
+/* STUDENT GRID */
+.s-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;padding:14px 20px;}
+.s-card{background:var(--light);border:1.5px solid var(--border);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;transition:all .2s;cursor:pointer;}
+.s-card:hover{border-color:var(--saffron);box-shadow:0 4px 12px var(--sh);transform:translateY(-2px);}
+.s-card .av{width:37px;height:37px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0;}
+.s-card .info{flex:1;min-width:0;}
+.s-card .name{font-weight:700;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.s-card .roll{font-size:.71rem;color:#888;font-family:'Space Mono',monospace;}
+.del-btn{background:none;border:none;cursor:pointer;color:#ccc;font-size:.95rem;transition:color .2s;flex-shrink:0;}
+.del-btn:hover{color:var(--red);}
+
+/* PASTE INFO */
+.paste-box{background:rgba(255,107,53,.07);border:1.5px dashed var(--saffron);border-radius:12px;padding:12px 16px;margin:14px 20px 0;font-size:.83rem;color:#555;line-height:1.8;}
+.paste-box strong{color:var(--saffron);}
+
+/* MONTHLY REPORT TABLE */
+.rep-table{border-collapse:collapse;width:100%;}
+.rep-table th{background:var(--ink);color:white;padding:8px 10px;font-size:.76rem;border:1px solid #333;text-align:center;}
+.rep-table th:nth-child(1),.rep-table th:nth-child(2){text-align:left;}
+.rep-table td{padding:7px 10px;font-size:.79rem;border:1px solid #ddd;text-align:center;}
+.rep-table td:nth-child(1){text-align:left;}
+.rep-table td:nth-child(2){text-align:left;font-weight:600;}
+.p-cell{background:rgba(45,138,78,.09);color:var(--green);font-weight:600;}
+.a-cell{background:rgba(192,57,43,.09);color:var(--red);font-weight:600;}
+.sum-row td{background:var(--light);font-weight:700;}
+
+/* INDIVIDUAL STUDENT REPORT */
+.stu-rep-header{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1.5px solid var(--border);}
+.stu-rep-av{width:56px;height:56px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;flex-shrink:0;}
+.stu-rep-name{font-size:1.1rem;font-weight:900;}
+.stu-rep-meta{font-size:.8rem;color:#888;}
+.month-section{margin:0 20px 18px;}
+.month-title{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:8px;padding:6px 0;border-bottom:2px solid var(--saffron);display:flex;align-items:center;justify-content:space-between;}
+.month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:5px;}
+.day-chip{border-radius:8px;padding:5px 3px;text-align:center;font-size:.71rem;font-weight:600;}
+.day-chip.p{background:rgba(45,138,78,.12);color:var(--green);border:1px solid rgba(45,138,78,.25);}
+.day-chip.a{background:rgba(192,57,43,.1);color:var(--red);border:1px solid rgba(192,57,43,.22);}
+.day-chip.date-lbl{font-size:.6rem;font-weight:400;color:#aaa;display:block;margin-top:1px;}
+.yearly-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;padding:16px 20px;}
+.yr-card{border-radius:12px;padding:13px;text-align:center;border:1.5px solid var(--border);}
+.yr-month{font-size:.78rem;font-weight:700;color:#555;margin-bottom:6px;}
+.yr-pct{font-size:1.5rem;font-weight:900;font-family:'Space Mono',monospace;}
+.yr-detail{font-size:.7rem;color:#888;margin-top:2px;}
+
+/* FLEX UTILS */
+.f-end{display:flex;justify-content:flex-end;padding:13px 20px;gap:9px;flex-wrap:wrap;}
+.f-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.gap2{gap:8px;}
+.flex{display:flex;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:white;padding:10px 20px;border-radius:12px;font-size:.87rem;font-weight:600;z-index:9999;transition:transform .3s ease;box-shadow:0 8px 24px rgba(0,0,0,.3);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.ok{border-left:4px solid var(--green);}
+.toast.err{border-left:4px solid var(--red);}
+
+/* EMPTY */
+.empty{text-align:center;padding:36px 20px;color:#aaa;}
+.empty .ico{font-size:2.6rem;margin-bottom:8px;}
+.empty p{font-size:.88rem;}
+
+/* FOOTER */
+footer{text-align:center;padding:22px;font-size:.72rem;color:#bbb;border-top:1px solid var(--border);margin-top:10px;}
+footer strong{color:#999;}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.sec-title{font-size:1.3rem;font-weight:700;display:flex;align-items:center;gap:10px;}
+/* AUTO-ABSENT PENDING */
+.s-row.auto-absent{border-color:#e0a0a0;background:rgba(192,57,43,.04);}
+
+/* ===== BOTTOM NAV (Mobile App Style) ===== */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.1);
+  z-index:200;
+  box-shadow:0 -4px 20px rgba(0,0,0,.25);
+}
+.bnav-inner{display:flex;justify-content:space-around;align-items:stretch;padding:0;}
+.bnav-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:10px 4px 12px;
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.45);font-family:'Noto Sans Devanagari',sans-serif;
+  font-size:.6rem;transition:all .2s;
+  border-top:3px solid transparent;
+}
+.bnav-btn .ico{font-size:1.3rem;line-height:1;}
+.bnav-btn.active{color:var(--gold);border-top-color:var(--gold);}
+.bnav-btn:active{background:rgba(255,255,255,.06);}
+
+/* Share Sheet Modal */
+.share-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:flex-end;justify-content:center;}
+.share-overlay.open{display:flex;animation:fadeIn .2s ease;}
+.share-sheet{background:white;border-radius:22px 22px 0 0;padding:24px 20px 36px;width:100%;max-width:500px;}
+.share-sheet h3{text-align:center;font-size:1rem;font-weight:700;margin-bottom:18px;color:var(--ink);}
+.share-grip{width:40px;height:4px;background:#ddd;border-radius:999px;margin:0 auto 18px;}
+.share-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.share-btn-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:8px 4px;border-radius:12px;transition:background .2s;}
+.share-btn-item:active{background:#f5f0e8;}
+.share-btn-item .sico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+.share-btn-item span{font-size:.72rem;color:#555;text-align:center;font-family:'Noto Sans Devanagari',sans-serif;}
+.share-link-box{background:#f5f0e8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.share-link-box input{flex:1;background:none;border:none;font-size:.8rem;color:#666;outline:none;font-family:'Space Mono',monospace;}
+.share-close{width:100%;padding:13px;background:var(--ink);color:white;border:none;border-radius:12px;font-family:'Noto Sans Devanagari',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;}
+.more-menu-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:white;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-size:.8rem;color:var(--ink);font-weight:600;transition:all .2s;}
+.more-menu-btn:active{background:var(--light);}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ===== MOBILE FULL RESPONSIVE ===== */
+@media(max-width:600px){
+  /* Show bottom nav, hide top nav */
+  .nav-tabs{display:none;}
+  .bottom-nav{display:block;}
+  /* Padding for bottom nav */
+  main{padding:14px 10px 90px;}
+  body{padding-bottom:0;}
+
+  .header-inner{padding:10px 14px;gap:8px;}
+  .logo{width:38px;height:38px;font-size:20px;border-radius:10px;}
+  .brand-text h1{font-size:1.05rem;}
+  .brand-text .sub{font-size:.6rem;}
+  .date-pill{font-size:.65rem;padding:5px 10px;}
+  .creator-tag{font-size:.56rem;}
+
+  .card{border-radius:14px;}
+  .card-header{padding:12px 14px;flex-wrap:wrap;gap:7px;}
+  .form-row{padding:12px 14px;gap:10px;grid-template-columns:1fr;}
+  .fg.full{grid-column:1/-1;}
+
+  /* Stats bar 2x2 on small screen */
+  .stats-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .stat-card{padding:11px 8px;min-width:0;}
+  .stat-num{font-size:1.7rem;}
+  .stat-lbl{font-size:.67rem;}
+
+  /* Student list */
+  .s-list{padding:6px 12px 10px;max-height:none;}
+  .s-row{padding:11px 12px;margin:4px 0;}
+  .s-name{font-size:.9rem;}
+  .s-av{width:36px;height:36px;}
+  .tog{width:42px;height:42px;font-size:1rem;font-weight:900;}
+  .tog-wrap{gap:8px;}
+
+  .btn{padding:11px 16px;font-size:.85rem;}
+  .btn-sm{padding:8px 12px;font-size:.78rem;}
+  .f-end{padding:10px 14px;gap:8px;flex-wrap:wrap;}
+  .f-end .btn{flex:1;justify-content:center;min-width:120px;}
+
+  .cls-tabs{padding:10px 12px;gap:6px;}
+  .cls-tab{padding:7px 14px;font-size:.82rem;}
+  .s-grid{grid-template-columns:repeat(2,1fr);padding:12px 12px;gap:8px;}
+  .s-card{padding:10px;}
+  .sec-title{font-size:1.1rem;}
+  .paste-box{margin:12px 14px 0;font-size:.8rem;}
+  .att-controls{padding:11px 14px;}
+  .month-section{margin:0 14px 14px;}
+  .yearly-summary{grid-template-columns:repeat(3,1fr);padding:12px 14px;}
+  footer{padding:16px 14px;margin-bottom:0;}
+  .stu-rep-header{padding:14px;}
+  .sec-hdr{margin-bottom:14px;}
+}
+@media(max-width:380px){
+  .brand-text h1{font-size:.95rem;}
+  .tog{width:40px;height:40px;}
+  .stat-num{font-size:1.5rem;}
+  .s-grid{grid-template-columns:1fr 1fr;}
+  .yearly-summary{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">📚</div>
+      <div class="brand-text">
+        <h1>सजग शिक्षण</h1>
+        <div class="sub">उपस्थिती व्यवस्थापन प्रणाली</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="date-pill" id="currentDate"></div>
+        <button onclick="shareApp()" title="शेअर करा" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);padding:6px 12px;border-radius:999px;color:var(--gold);cursor:pointer;font-size:.8rem;display:flex;align-items:center;gap:5px;white-space:nowrap;">
+          📤 शेअर
+        </button>
+      </div>
+      <div class="creator-tag">© <strong style="opacity:.75;">प्रो. डॉ. राहुल हांडे</strong> | सर्व हक्क राखीव</div>
+    </div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('attendance',this)">📋 उपस्थिती</button>
+    <button class="nav-tab" onclick="switchTab('monthly',this)">📅 वर्गनिहाय</button>
+    <button class="nav-tab" onclick="switchTab('individual',this)">👤 विद्यार्थीनिहाय</button>
+    <button class="nav-tab" onclick="switchTab('records',this)">🗒️ नोंदी</button>
+    <button class="nav-tab" onclick="switchTab('students',this)">👨‍🎓 विद्यार्थी</button>
+    <button class="nav-tab" onclick="switchTab('settings',this)">⚙️ सेटिंग्ज</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ===== TAB 1: ATTENDANCE ===== -->
+<div class="panel active" id="panel-attendance">
+  <div class="stats-bar">
+    <div class="stat-card g"><div class="stat-num" id="sP">0</div><div class="stat-lbl">✅ उपस्थित</div></div>
+    <div class="stat-card r"><div class="stat-num" id="sA">0</div><div class="stat-lbl">❌ अनुपस्थित</div></div>
+    <div class="stat-card b"><div class="stat-num" id="sT">0</div><div class="stat-lbl">👥 एकूण</div></div>
+    <div class="stat-card o">
+      <div class="stat-num" id="sPct">0%</div>
+      <div class="stat-lbl">📈 टक्केवारी</div>
+      <div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-title">⚙️ तपशील निवडा</span></div>
+    <div class="form-row">
+      <div class="fg">
+        <label>वर्ग</label>
+        <select id="clsSel">
+          <option value="">-- वर्ग निवडा --</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>विषय</label>
+        <select id="subSel">
+          <option value="">-- विषय निवडा --</option>
+          <option>मराठी</option><option>इंग्रजी</option><option>हिंदी</option>
+          <option>इतिहास</option><option>भूगोल</option><option>अर्थशास्त्र</option>
+          <option>समाजशास्त्र</option><option>राज्यशास्त्र</option><option>मानसशास्त्र</option>
+          <option>तत्त्वज्ञान</option><option>संगीत</option><option>गणित</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>दिनांक</label>
+        <input type="date" id="dateInp">
+      </div>
+      <div class="fg">
+        <label>तासिका</label>
+        <select id="lecSel"></select>
+      </div>
+    </div>
+    <div style="padding:0 20px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="loadStudents()">📋 विद्यार्थी यादी लोड करा</button>
+      <label style="display:flex;align-items:center;gap:7px;font-size:.85rem;color:#555;cursor:pointer;font-weight:500;">
+        <input type="checkbox" id="autoAbsent" style="width:16px;height:16px;cursor:pointer;border-radius:4px;" checked>
+        उपस्थित नोंद न केलेले आपोआप अनुपस्थित
+      </label>
+    </div>
+  </div>
+
+  <div class="card" id="attCard" style="display:none">
+    <div class="card-header">
+      <span class="card-title">👥 विद्यार्थी यादी &nbsp;<span id="attLabel" style="font-size:.79rem;font-weight:400;color:#888;"></span></span>
+      <div class="flex gap2">
+        <button class="btn btn-sm btn-outline" onclick="markAll('present')">✅ सर्व उपस्थित</button>
+        <button class="btn btn-sm btn-red" onclick="markAll('absent')">❌ सर्व अनुपस्थित</button>
+      </div>
+    </div>
+    <div class="att-controls">
+      <input type="text" id="srchStu" placeholder="🔍 नाव / रोल नंबर..." style="flex:1;max-width:250px;" oninput="filterAtt()">
+      <span id="autoAbsentNote" style="font-size:.78rem;color:var(--saffron);"></span>
+    </div>
+    <div class="s-list" id="stuAttList"></div>
+    <div class="f-end">
+      <button class="btn btn-success" onclick="saveAttendance(false)">💾 सेव्ह करा</button>
+      <button class="btn btn-blue" onclick="saveAttendance(true)">💾🖨️ सेव्ह + प्रिंट</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: CLASS MONTHLY REPORT ===== -->
+<div class="panel" id="panel-monthly">
+  <div class="sec-hdr">
+    <div class="sec-title">📅 वर्गनिहाय मासिक अहवाल</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">⚙️ अहवाल निवडा</span></div>
+    <div class="form-row">
+      <div class="fg">
+        <label>वर्ग</label>
+        <select id="rClass" onchange="genClassReport()">
+          <option value="">-- वर्ग निवडा --</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>विषय (रिकामे = सर्व)</label>
+        <select id="rSubj" onchange="genClassReport()">
+          <option value="">सर्व विषय</option>
+          <option>मराठी</option><option>इंग्रजी</option><option>हिंदी</option>
+          <option>इतिहास</option><option>भूगोल</option><option>अर्थशास्त्र</option>
+          <option>समाजशास्त्र</option><option>राज्यशास्त्र</option><option>मानसशास्त्र</option>
+          <option>तत्त्वज्ञान</option><option>संगीत</option><option>गणित</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>महिना</label>
+        <select id="rMonth" onchange="genClassReport()">
+          <option value="1">जानेवारी</option><option value="2">फेब्रुवारी</option>
+          <option value="3">मार्च</option><option value="4">एप्रिल</option>
+          <option value="5">मे</option><option value="6">जून</option>
+          <option value="7">जुलै</option><option value="8">ऑगस्ट</option>
+          <option value="9">सप्टेंबर</option><option value="10">ऑक्टोबर</option>
+          <option value="11">नोव्हेंबर</option><option value="12">डिसेंबर</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>वर्ष</label>
+        <input type="number" id="rYear" value="2025" min="2020" max="2035" onchange="genClassReport()">
+      </div>
+    </div>
+    <div class="f-end">
+      <button class="btn btn-sm btn-outline" onclick="exportClassCSV()">⬇️ CSV</button>
+      <button class="btn btn-blue" onclick="printClassReport()">🖨️ प्रिंट काढा</button>
+    </div>
+  </div>
+  <div id="classReportOut"><div class="empty"><div class="ico">📅</div><p>वर्ग व महिना निवडा</p></div></div>
+</div>
+
+<!-- ===== TAB 3: INDIVIDUAL STUDENT REPORT ===== -->
+<div class="panel" id="panel-individual">
+  <div class="sec-hdr">
+    <div class="sec-title">👤 विद्यार्थीनिहाय उपस्थिती अहवाल</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">⚙️ विद्यार्थी निवडा</span></div>
+    <div class="form-row">
+      <div class="fg">
+        <label>वर्ग</label>
+        <select id="indClass" onchange="loadIndStudents()">
+          <option value="">-- वर्ग निवडा --</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>विद्यार्थी</label>
+        <select id="indStudent" onchange="genIndReport()">
+          <option value="">-- विद्यार्थी निवडा --</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>अहवाल प्रकार</label>
+        <select id="indType" onchange="genIndReport()">
+          <option value="monthly">महिनानिहाय</option>
+          <option value="yearly">वर्षभर (सारांश)</option>
+        </select>
+      </div>
+      <div class="fg" id="indMonthWrap">
+        <label>महिना</label>
+        <select id="indMonth" onchange="genIndReport()">
+          <option value="1">जानेवारी</option><option value="2">फेब्रुवारी</option>
+          <option value="3">मार्च</option><option value="4">एप्रिल</option>
+          <option value="5">मे</option><option value="6">जून</option>
+          <option value="7">जुलै</option><option value="8">ऑगस्ट</option>
+          <option value="9">सप्टेंबर</option><option value="10">ऑक्टोबर</option>
+          <option value="11">नोव्हेंबर</option><option value="12">डिसेंबर</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>वर्ष</label>
+        <input type="number" id="indYear" value="2025" min="2020" max="2035" onchange="genIndReport()">
+      </div>
+    </div>
+    <div class="f-end">
+      <button class="btn btn-purple" onclick="printIndReport()">🖨️ प्रिंट काढा</button>
+    </div>
+  </div>
+  <div id="indReportOut"><div class="empty"><div class="ico">👤</div><p>वर्ग व विद्यार्थी निवडा</p></div></div>
+</div>
+
+<!-- ===== TAB 4: STUDENTS ===== -->
+<div class="panel" id="panel-students">
+  <div class="sec-hdr"><div class="sec-title">👨‍🎓 विद्यार्थी व्यवस्थापन</div></div>
+
+  <!-- NEW CLASS MANAGEMENT -->
+  <div class="card">
+    <div class="card-header"><span class="card-title">🏫 वर्ग व्यवस्थापन</span></div>
+    <div style="padding:16px 20px;">
+      <div style="font-size:.83rem;color:#666;margin-bottom:12px;">सध्याचे वर्ग:</div>
+      <div id="classChips" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+        <div class="fg" style="flex:1;min-width:160px;">
+          <label>नवीन वर्गाचे नाव</label>
+          <input type="text" id="newClsName" placeholder="उदा. TYBA, M.A.III..." maxlength="20">
+        </div>
+        <button class="btn btn-primary" onclick="addClass()" style="flex-shrink:0;">➕ वर्ग जोडा</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-title">➕ विद्यार्थी जोडा</span></div>
+    <div class="cls-tabs" id="addTabs"></div>
+    <div class="paste-box">
+      <strong>📋 Copy-Paste सोय:</strong> विद्यार्थ्यांची नावे खाली Paste करा.<br>
+      प्रत्येक नाव <strong>नवीन ओळीत</strong> असावे. रोल नंबर आपोआप लागतात.
+    </div>
+    <div class="form-row">
+      <div class="fg full">
+        <label>नावे पेस्ट करा (प्रत्येक नाव नवीन ओळीत)</label>
+        <textarea id="bulkNames" placeholder="उदाहरण:&#10;अनिकेत पाटील&#10;प्रिया देशमुख&#10;रोहन जाधव&#10;सोनाली शिंदे"></textarea>
+      </div>
+      <div class="fg">
+        <label>सुरुवातीचा रोल नंबर</label>
+        <input type="number" id="startRoll" value="1" min="1">
+      </div>
+    </div>
+    <div class="f-end">
+      <button class="btn btn-red" style="margin-right:auto" onclick="clearClass()">🗑️ <span id="clrLbl">—</span> रिकामा करा</button>
+      <button class="btn btn-primary" onclick="bulkAdd()">➕ सर्व जोडा</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">📋 विद्यार्थी यादी</span>
+      <span id="stuCount" style="font-size:.8rem;color:#888;"></span>
+    </div>
+    <div class="cls-tabs" id="viewTabs"></div>
+    <div class="s-grid" id="stuGrid"></div>
+  </div>
+</div>
+
+<!-- ===== TAB 5: RECORDS (saved sessions) ===== -->
+<div class="panel" id="panel-records">
+  <div class="sec-hdr">
+    <div class="sec-title">🗒️ उपस्थिती नोंदी</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">🔍 फिल्टर करा</span></div>
+    <div class="form-row">
+      <div class="fg">
+        <label>वर्ग</label>
+        <select id="recClass" onchange="renderRecords()">
+          <option value="">सर्व वर्ग</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>दिनांक</label>
+        <input type="date" id="recDate" onchange="renderRecords()">
+      </div>
+      <div class="fg">
+        <label>विषय</label>
+        <select id="recSubj" onchange="renderRecords()">
+          <option value="">सर्व विषय</option>
+          <option>मराठी</option><option>इंग्रजी</option><option>हिंदी</option>
+          <option>इतिहास</option><option>भूगोल</option><option>अर्थशास्त्र</option>
+          <option>समाजशास्त्र</option><option>राज्यशास्त्र</option><option>मानसशास्त्र</option>
+          <option>तत्त्वज्ञान</option><option>संगीत</option><option>गणित</option>
+        </select>
+      </div>
+      <div class="fg" style="justify-content:flex-end;">
+        <button class="btn btn-sm btn-outline" onclick="clearRecFilters()" style="margin-top:auto;">🔄 रिसेट</button>
+      </div>
+    </div>
+  </div>
+  <div id="recordsList"></div>
+</div>
+
+<!-- ===== TAB 6: SETTINGS ===== -->
+<div class="panel" id="panel-settings">
+  <div class="sec-hdr"><div class="sec-title">⚙️ सेटिंग्ज</div></div>
+
+  <!-- TIMETABLE SETTINGS -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">🕐 वेळापत्रक सेटिंग</span>
+      <button class="btn btn-sm btn-outline" onclick="resetTimetable()">↩️ मूळ वेळापत्रक</button>
+    </div>
+    <div style="padding:16px 20px;">
+      <div style="font-size:.83rem;color:#666;margin-bottom:14px;">तासिका जोडा, काढा किंवा बदला. येथे केलेले बदल उपस्थिती नोंदीत दिसतील.</div>
+      <div id="timetableEditor"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+        <div class="fg" style="flex:1;min-width:200px;">
+          <label>नवीन तासिकेचे नाव व वेळ</label>
+          <input type="text" id="newLecName" placeholder="उदा. पाचवी तासिका (१२:००–१:००)" maxlength="60">
+        </div>
+        <button class="btn btn-primary" onclick="addLecture()">➕ तासिका जोडा</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLEGE NAME SETTING -->
+  <div class="card">
+    <div class="card-header"><span class="card-title">🏫 महाविद्यालयाचे नाव</span></div>
+    <div class="form-row">
+      <div class="fg full">
+        <label>महाविद्यालयाचे नाव (प्रिंटवर दिसेल)</label>
+        <input type="text" id="collegeName" placeholder="उदा. श्री. शिवाजी महाविद्यालय, अमरावती" oninput="saveSettings()">
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div style="font-size:.8rem;font-weight:700;color:#888;margin-bottom:4px;">सजग शिक्षण — विद्यार्थी उपस्थिती व्यवस्थापन प्रणाली</div>
+  <div style="font-size:.73rem;color:#aaa;">© Copyright <strong style="color:#999;">प्रो. डॉ. राहुल हांडे</strong> | सर्व हक्क राखीव | अनधिकृत वापर व वितरण निषिद्ध</div>
+</footer>
+
+<!-- ===== BOTTOM NAV (mobile only) ===== -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bnav-inner">
+    <button class="bnav-btn active" id="bn-attendance" onclick="switchTabMobile('attendance',this)">
+      <span class="ico">📋</span><span>उपस्थिती</span>
+    </button>
+    <button class="bnav-btn" id="bn-monthly" onclick="switchTabMobile('monthly',this)">
+      <span class="ico">📅</span><span>अहवाल</span>
+    </button>
+    <button class="bnav-btn" id="bn-records" onclick="switchTabMobile('records',this)">
+      <span class="ico">🗒️</span><span>नोंदी</span>
+    </button>
+    <button class="bnav-btn" id="bn-students" onclick="switchTabMobile('students',this)">
+      <span class="ico">👨‍🎓</span><span>विद्यार्थी</span>
+    </button>
+    <button class="bnav-btn" id="bn-more" onclick="openMoreMenu()">
+      <span class="ico">⋯</span><span>अधिक</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== MORE MENU (mobile) ===== -->
+<div class="share-overlay" id="moreOverlay" onclick="closeMoreMenu(event)">
+  <div class="share-sheet" onclick="event.stopPropagation()">
+    <div class="share-grip"></div>
+    <h3>📚 सजग शिक्षण</h3>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+      <button onclick="switchTabMobile('individual',null);closeMoreMenu();" class="more-menu-btn">
+        <span style="font-size:1.4rem;">👤</span>
+        <span>विद्यार्थीनिहाय</span>
+      </button>
+      <button onclick="switchTabMobile('settings',null);closeMoreMenu();" class="more-menu-btn">
+        <span style="font-size:1.4rem;">⚙️</span>
+        <span>सेटिंग्ज</span>
+      </button>
+    </div>
+
+    <div style="background:#f5f0e8;border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:.78rem;font-weight:700;color:#555;margin-bottom:12px;">📤 ॲप शेअर करा</div>
+      <div class="share-grid">
+        <div class="share-btn-item" onclick="shareVia('whatsapp')">
+          <div class="sico" style="background:#e8f5e9;">💬</div>
+          <span>WhatsApp</span>
+        </div>
+        <div class="share-btn-item" onclick="shareVia('email')">
+          <div class="sico" style="background:#e3f2fd;">📧</div>
+          <span>Email</span>
+        </div>
+        <div class="share-btn-item" onclick="shareVia('copy')">
+          <div class="sico" style="background:#fce4ec;">🔗</div>
+          <span>लिंक Copy</span>
+        </div>
+        <div class="share-btn-item" onclick="shareVia('native')">
+          <div class="sico" style="background:#f3e5f5;">📤</div>
+          <span>इतर</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;color:#bbb;text-align:center;margin-bottom:14px;">
+      © प्रो. डॉ. राहुल हांडे | सर्व हक्क राखीव
+    </div>
+    <button class="share-close" onclick="closeMoreMenu()">बंद करा</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ======================== DATA ========================
+const MN = ['','जानेवारी','फेब्रुवारी','मार्च','एप्रिल','मे','जून','जुलै','ऑगस्ट','सप्टेंबर','ऑक्टोबर','नोव्हेंबर','डिसेंबर'];
+
+const DEFAULT_TIMETABLE = [
+  'पहिली तासिका (७:३०–८:३०)',
+  'दुसरी तासिका (८:३०–९:३०)',
+  'तिसरी तासिका (९:४५–१०:४५)',
+  'चौथी तासिका (१०:४५–११:४५)'
+];
+
+let students  = JSON.parse(localStorage.getItem('ss_students')||'[]');
+let records   = JSON.parse(localStorage.getItem('ss_records')||'[]');
+let timetable = JSON.parse(localStorage.getItem('ss_timetable')||JSON.stringify(DEFAULT_TIMETABLE));
+let collegeName = localStorage.getItem('ss_college')||'';
+let curAtt = {}, addCls = 'FYBA', viewCls = 'FYBA';
+
+function save(){
+  localStorage.setItem('ss_students',JSON.stringify(students));
+  localStorage.setItem('ss_records',JSON.stringify(records));
+}
+function saveTimetable(){ localStorage.setItem('ss_timetable',JSON.stringify(timetable)); }
+function saveSettings(){
+  collegeName = document.getElementById('collegeName').value;
+  localStorage.setItem('ss_college', collegeName);
+}
+
+// ======================== INIT ========================
+const today = new Date();
+document.getElementById('currentDate').textContent = today.toLocaleDateString('mr-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('dateInp').value = today.toISOString().slice(0,10);
+document.getElementById('rMonth').value = today.getMonth()+1;
+document.getElementById('rYear').value = today.getFullYear();
+document.getElementById('indMonth').value = today.getMonth()+1;
+document.getElementById('indYear').value = today.getFullYear();
+
+function renderTimetableSelect(){
+  const sel = document.getElementById('lecSel');
+  const cur = sel.value;
+  sel.innerHTML = timetable.map(t=>`<option>${t}</option>`).join('');
+  if(timetable.includes(cur)) sel.value = cur;
+}
+
+function renderTimetableEditor(){
+  const ed = document.getElementById('timetableEditor');
+  if(!ed) return;
+  ed.innerHTML = timetable.map((t,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <input type="text" value="${t}" onchange="editLecture(${i},this.value)"
+        style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:inherit;font-size:.9rem;">
+      <button onclick="removeLecture(${i})" style="background:none;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;color:#aaa;font-size:.9rem;transition:all .2s;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='#aaa'">✕</button>
+    </div>`).join('');
+}
+
+// ======================== TABS ========================
+function switchTab(tab,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  el.classList.add('active');
+  // sync bottom nav
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  const bn=document.getElementById('bn-'+tab);
+  if(bn) bn.classList.add('active');
+  if(tab==='students'){ renderClassUI(); renderStuList(); }
+  if(tab==='individual') { loadIndStudents(); genIndReport(); }
+  if(tab==='records') { renderRecordsClassFilter(); renderRecords(); }
+  if(tab==='settings') { renderTimetableEditor(); document.getElementById('collegeName').value=collegeName; }
+}
+
+// ======================== ATTENDANCE ========================
+function loadStudents(){
+  const cls=document.getElementById('clsSel').value;
+  const sub=document.getElementById('subSel').value;
+  if(!cls||!sub){showToast('⚠️ वर्ग आणि विषय निवडा','err');return;}
+  const list=students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll);
+  if(!list.length){showToast('❌ या वर्गात विद्यार्थी नाहीत','err');return;}
+  curAtt={};
+  list.forEach(s=>curAtt[s.id]=null);
+  document.getElementById('attLabel').textContent=`(${cls} · ${sub})`;
+  document.getElementById('attCard').style.display='block';
+  renderAttList(list);
+  updStats();
+}
+
+function renderAttList(list){
+  const cls=document.getElementById('clsSel').value;
+  const all=list||students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll);
+  const q=(document.getElementById('srchStu').value||'').toLowerCase();
+  const fl=all.filter(s=>s.name.toLowerCase().includes(q)||String(s.roll).includes(q));
+  const autoAb=document.getElementById('autoAbsent').checked;
+  const c=document.getElementById('stuAttList');
+
+  // Update auto-absent note
+  const nullCount = Object.values(curAtt).filter(v=>v===null).length;
+  const note = document.getElementById('autoAbsentNote');
+  if(autoAb && nullCount>0){
+    note.textContent = `🔶 ${nullCount} विद्यार्थी आपोआप अनुपस्थित होतील`;
+  } else { note.textContent=''; }
+
+  if(!fl.length){c.innerHTML='<div class="empty"><div class="ico">🔍</div><p>विद्यार्थी सापडला नाही</p></div>';return;}
+  c.innerHTML=fl.map(s=>{
+    const st=curAtt[s.id];
+    // If autoAbsent on and status is null, visually show as pending-absent
+    const dispClass = st ? st : (autoAb ? 'auto-absent' : '');
+    return `<div class="s-row ${dispClass}">
+      <div class="s-info">
+        <div class="s-av" style="${!st&&autoAb?'background:#e0a0a0;':''}">${ini(s.name)}</div>
+        <div>
+          <div class="s-name">${s.name}</div>
+          <div class="s-roll">रोल #${s.roll}${!st&&autoAb?' &nbsp;<span style="color:var(--red);font-size:.7rem;">↪ अनुपस्थित होईल</span>':''}</div>
+        </div>
+      </div>
+      <div class="tog-wrap">
+        <button class="tog tog-p ${st==='present'?'on':''}" onclick="setSt(${s.id},'present')">P</button>
+        <button class="tog tog-a ${st==='absent'?'on':''}" onclick="setSt(${s.id},'absent')">A</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterAtt(){
+  const cls=document.getElementById('clsSel').value;
+  renderAttList(students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll));
+}
+
+function setSt(id,status){
+  curAtt[id]=status;
+  filterAtt();
+  updStats();
+}
+
+function markAll(st){
+  Object.keys(curAtt).forEach(k=>curAtt[k]=st);
+  filterAtt();
+  updStats();
+}
+
+function updStats(){
+  const v=Object.values(curAtt);
+  const p=v.filter(x=>x==='present').length;
+  const a=v.filter(x=>x==='absent').length;
+  const t=v.length;
+  const pct=t>0?Math.round(p/t*100):0;
+  document.getElementById('sP').textContent=p;
+  document.getElementById('sA').textContent=a;
+  document.getElementById('sT').textContent=t;
+  document.getElementById('sPct').textContent=pct+'%';
+  document.getElementById('progBar').style.width=pct+'%';
+}
+
+function saveAttendance(andPrint=false){
+  const cls=document.getElementById('clsSel').value;
+  const sub=document.getElementById('subSel').value;
+  const date=document.getElementById('dateInp').value;
+  const lec=document.getElementById('lecSel').value;
+  const autoAb=document.getElementById('autoAbsent').checked;
+
+  // Auto-absent: fill nulls with 'absent'
+  if(autoAb){
+    Object.keys(curAtt).forEach(k=>{ if(curAtt[k]===null) curAtt[k]='absent'; });
+  }
+
+  const un=Object.values(curAtt).filter(v=>v===null).length;
+  if(un>0){showToast(`⚠️ ${un} विद्यार्थ्यांची उपस्थिती बाकी आहे`,'err');return;}
+
+  records=records.filter(r=>!(r.class===cls&&r.subject===sub&&r.date===date&&r.lecture===lec));
+  const sessionId = `${cls}_${sub}_${date}_${lec}`;
+  students.filter(s=>s.class===cls).forEach(s=>{
+    records.push({id:Date.now()+Math.random(),sessionId,studentId:s.id,studentName:s.name,roll:s.roll,class:cls,subject:sub,date,lecture:lec,status:curAtt[s.id]});
+  });
+  save();
+  showToast('✅ उपस्थिती सेव्ह झाली!','ok');
+
+  if(andPrint) printSession(cls,sub,date,lec);
+
+  curAtt={};
+  document.getElementById('attCard').style.display='none';
+  document.getElementById('clsSel').value='';
+  document.getElementById('subSel').value='';
+  document.getElementById('autoAbsentNote').textContent='';
+  updStats();
+}
+
+// ======================== CLASS MONTHLY REPORT ========================
+function genClassReport(){
+  const cls=document.getElementById('rClass').value;
+  const sub=document.getElementById('rSubj').value;
+  const m=parseInt(document.getElementById('rMonth').value);
+  const y=parseInt(document.getElementById('rYear').value);
+  const out=document.getElementById('classReportOut');
+  if(!cls){out.innerHTML='<div class="empty"><div class="ico">📅</div><p>वर्ग निवडा</p></div>';return;}
+
+  let recs=records.filter(r=>{
+    if(r.class!==cls)return false;
+    if(sub&&r.subject!==sub)return false;
+    const d=new Date(r.date);
+    return d.getFullYear()===y&&(d.getMonth()+1)===m;
+  });
+
+  if(!recs.length){out.innerHTML=`<div class="empty"><div class="ico">📭</div><p>${cls} · ${MN[m]} ${y} — कोणतीही नोंद नाही</p></div>`;return;}
+
+  const dates=[...new Set(recs.map(r=>r.date))].sort();
+  const list=students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll);
+  const mx=buildMatrix(list,recs,dates);
+
+  const dHdr=dates.map(d=>{const p=d.split('-');return`<th>${p[2]}/${p[1]}</th>`;}).join('');
+  const rows=list.map(s=>{
+    const p=dates.filter(d=>mx[s.id][d]==='present').length;
+    const t=dates.filter(d=>mx[s.id][d]).length;
+    const pct=t>0?Math.round(p/t*100):null;
+    const ps=pct!==null&&pct<75?'color:var(--red);font-weight:700':'color:var(--green);font-weight:700';
+    const cells=dates.map(d=>{
+      const st=mx[s.id][d];
+      if(!st)return`<td style="color:#ddd">-</td>`;
+      return`<td class="${st==='present'?'p-cell':'a-cell'}">${st==='present'?'P':'A'}</td>`;
+    }).join('');
+    return`<tr><td>${s.roll}</td><td>${s.name}</td>${cells}
+      <td style="font-family:'Space Mono',monospace;text-align:center">${p}/${t}</td>
+      <td style="${ps};text-align:center">${pct!==null?pct+'%':'-'}</td></tr>`;
+  }).join('');
+
+  const sumRow=`<tr class="sum-row"><td colspan="2" style="text-align:right">एकूण →</td>
+    ${dates.map(d=>{
+      const p=list.filter(s=>mx[s.id][d]==='present').length;
+      const t=list.filter(s=>mx[s.id][d]).length;
+      return`<td style="text-align:center">${p}/${t}</td>`;
+    }).join('')}<td colspan="2"></td></tr>`;
+
+  out.innerHTML=`<div class="card" id="clsRepCard">
+    <div style="padding:16px 20px 10px;border-bottom:1.5px solid var(--border);">
+      <div style="font-weight:900;font-size:1.05rem;">${cls} — ${sub||'सर्व विषय'}</div>
+      <div style="font-size:.81rem;color:#888;margin-top:3px;">${MN[m]} ${y} · ${list.length} विद्यार्थी · ${dates.length} दिवस</div>
+    </div>
+    <div style="overflow-x:auto;padding:2px 0;">
+      <table class="rep-table"><thead><tr><th>रोल</th><th>नाव</th>${dHdr}<th>P/T</th><th>%</th></tr></thead>
+      <tbody>${rows}${sumRow}</tbody></table>
+    </div>
+    <div style="padding:9px 20px;font-size:.76rem;color:#888;border-top:1px solid #eee;">
+      P=उपस्थित &nbsp;|&nbsp; A=अनुपस्थित &nbsp;|&nbsp; -=नोंद नाही &nbsp;|&nbsp; 🔴 <75% उपस्थिती
+    </div>
+  </div>`;
+}
+
+function buildMatrix(list,recs,dates){
+  const mx={};
+  list.forEach(s=>{mx[s.id]={};});
+  recs.forEach(r=>{
+    if(mx[r.studentId]!==undefined)
+      if(!mx[r.studentId][r.date]||r.status==='present')
+        mx[r.studentId][r.date]=r.status;
+  });
+  return mx;
+}
+
+function printClassReport(){
+  const el=document.getElementById('clsRepCard');
+  if(!el){showToast('⚠️ आधी अहवाल तयार करा','err');return;}
+  const cls=document.getElementById('rClass').value;
+  const sub=document.getElementById('rSubj').value;
+  const m=parseInt(document.getElementById('rMonth').value);
+  const y=parseInt(document.getElementById('rYear').value);
+  openPrintWindow(
+    `${cls} — ${sub||'सर्व विषय'} | ${MN[m]} ${y}`,
+    el.querySelector('table').outerHTML,
+    'landscape'
+  );
+}
+
+function exportClassCSV(){
+  const el=document.getElementById('clsRepCard');
+  if(!el){showToast('⚠️ आधी अहवाल तयार करा','err');return;}
+  const cls=document.getElementById('rClass').value;
+  const sub=document.getElementById('rSubj').value;
+  const m=parseInt(document.getElementById('rMonth').value);
+  const y=parseInt(document.getElementById('rYear').value);
+  let recs=records.filter(r=>{
+    if(r.class!==cls)return false;
+    if(sub&&r.subject!==sub)return false;
+    const d=new Date(r.date);
+    return d.getFullYear()===y&&(d.getMonth()+1)===m;
+  });
+  const dates=[...new Set(recs.map(r=>r.date))].sort();
+  const list=students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll);
+  const mx=buildMatrix(list,recs,dates);
+  const hdr=['रोल','नाव',...dates.map(d=>d.split('-').reverse().join('/')),'P','T','%'];
+  const rows=list.map(s=>{
+    const cells=dates.map(d=>!mx[s.id][d]?'-':mx[s.id][d]==='present'?'P':'A');
+    const p=dates.filter(d=>mx[s.id][d]==='present').length;
+    const t=dates.filter(d=>mx[s.id][d]).length;
+    return[s.roll,s.name,...cells,p,t,t>0?Math.round(p/t*100)+'%':'-'];
+  });
+  dlCSV([hdr,...rows],`${cls}_${MN[m]}_${y}.csv`);
+}
+
+// ======================== INDIVIDUAL STUDENT REPORT ========================
+function loadIndStudents(){
+  const cls=document.getElementById('indClass').value;
+  const sel=document.getElementById('indStudent');
+  sel.innerHTML='<option value="">-- विद्यार्थी निवडा --</option>';
+  if(!cls)return;
+  students.filter(s=>s.class===cls).sort((a,b)=>+a.roll-+b.roll).forEach(s=>{
+    const o=document.createElement('option');
+    o.value=s.id;
+    o.textContent=`${s.roll}. ${s.name}`;
+    sel.appendChild(o);
+  });
+  genIndReport();
+}
+
+function genIndReport(){
+  document.getElementById('indMonthWrap').style.display=
+    document.getElementById('indType').value==='monthly'?'flex':'none';
+
+  const sid=document.getElementById('indStudent').value;
+  const type=document.getElementById('indType').value;
+  const m=parseInt(document.getElementById('indMonth').value);
+  const y=parseInt(document.getElementById('indYear').value);
+  const out=document.getElementById('indReportOut');
+
+  if(!sid){out.innerHTML='<div class="empty"><div class="ico">👤</div><p>विद्यार्थी निवडा</p></div>';return;}
+
+  const stu=students.find(s=>s.id==sid);
+  if(!stu){return;}
+
+  if(type==='monthly'){
+    genIndMonthly(stu,m,y,out);
+  } else {
+    genIndYearly(stu,y,out);
+  }
+}
+
+function genIndMonthly(stu,m,y,out){
+  const stuRecs=records.filter(r=>{
+    if(r.studentId!=stu.id)return false;
+    const d=new Date(r.date);
+    return d.getFullYear()===y&&(d.getMonth()+1)===m;
+  });
+
+  // Group by subject
+  const subjects=[...new Set(stuRecs.map(r=>r.subject))].sort();
+  const dates=[...new Set(stuRecs.map(r=>r.date))].sort();
+  const totalP=stuRecs.filter(r=>r.status==='present').length;
+  const totalT=stuRecs.length;
+  const totalPct=totalT>0?Math.round(totalP/totalT*100):0;
+
+  let subjectsHTML='';
+  if(subjects.length===0){
+    subjectsHTML='<div class="empty" style="padding:30px;"><div class="ico">📭</div><p>या महिन्यात कोणतीही नोंद नाही</p></div>';
+  } else {
+    subjects.forEach(sub=>{
+      const subRecs=stuRecs.filter(r=>r.subject===sub).sort((a,b)=>a.date.localeCompare(b.date));
+      const subP=subRecs.filter(r=>r.status==='present').length;
+      const subT=subRecs.length;
+      const subPct=subT>0?Math.round(subP/subT*100):0;
+      const pctColor=subPct<75?'var(--red)':'var(--green)';
+      const chips=subRecs.map(r=>{
+        const d=r.date.split('-');
+        return`<div class="day-chip ${r.status==='present'?'p':'a'}">
+          ${r.status==='present'?'✓':'✗'}
+          <span class="date-lbl">${d[2]}/${d[1]}</span>
+        </div>`;
+      }).join('');
+      subjectsHTML+=`<div class="month-section">
+        <div class="month-title">
+          <span>${sub}</span>
+          <span style="font-size:.82rem;color:${pctColor}">${subP}/${subT} &nbsp;·&nbsp; ${subPct}%</span>
+        </div>
+        <div class="month-grid">${chips}</div>
+      </div>`;
+    });
+  }
+
+  const pctColor=totalPct<75?'var(--red)':'var(--green)';
+  out.innerHTML=`<div class="card" id="indRepCard">
+    <div class="stu-rep-header">
+      <div class="stu-rep-av">${ini(stu.name)}</div>
+      <div>
+        <div class="stu-rep-name">${stu.name}</div>
+        <div class="stu-rep-meta">${stu.class} · रोल #${stu.roll}</div>
+        <div class="stu-rep-meta">${MN[m]} ${y}</div>
+      </div>
+      <div style="margin-left:auto;text-align:center">
+        <div style="font-size:2rem;font-weight:900;font-family:'Space Mono',monospace;color:${pctColor}">${totalPct}%</div>
+        <div style="font-size:.75rem;color:#888">${totalP}/${totalT} एकूण</div>
+      </div>
+    </div>
+    ${subjectsHTML}
+    <div style="padding:10px 20px;font-size:.75rem;color:#888;border-top:1px solid #eee;">
+      ✓ = उपस्थित &nbsp;|&nbsp; ✗ = अनुपस्थित &nbsp;|&nbsp; 🔴 % म्हणजे ७५% पेक्षा कमी
+    </div>
+  </div>`;
+}
+
+function genIndYearly(stu,y,out){
+  const stuRecs=records.filter(r=>{
+    if(r.studentId!=stu.id)return false;
+    return new Date(r.date).getFullYear()===y;
+  });
+
+  if(!stuRecs.length){
+    out.innerHTML=`<div class="empty"><div class="ico">📭</div><p>${stu.name} · ${y} — कोणतीही नोंद नाही</p></div>`;
+    return;
+  }
+
+  const totalP=stuRecs.filter(r=>r.status==='present').length;
+  const totalT=stuRecs.length;
+  const totalPct=totalT>0?Math.round(totalP/totalT*100):0;
+  const pctColor=totalPct<75?'var(--red)':'var(--green)';
+
+  // Build monthly summary cards
+  let monthCards='';
+  for(let mo=1;mo<=12;mo++){
+    const moRecs=stuRecs.filter(r=>(new Date(r.date).getMonth()+1)===mo);
+    if(!moRecs.length){
+      monthCards+=`<div class="yr-card" style="opacity:.4;"><div class="yr-month">${MN[mo]}</div><div class="yr-pct" style="color:#ccc;">—</div><div class="yr-detail">नोंद नाही</div></div>`;
+      continue;
+    }
+    const p=moRecs.filter(r=>r.status==='present').length;
+    const t=moRecs.length;
+    const pct=Math.round(p/t*100);
+    const pc=pct<75?'var(--red)':'var(--green)';
+    monthCards+=`<div class="yr-card">
+      <div class="yr-month">${MN[mo]}</div>
+      <div class="yr-pct" style="color:${pc}">${pct}%</div>
+      <div class="yr-detail">${p}/${t} तासिका</div>
+    </div>`;
+  }
+
+  // Yearly by subject table
+  const subjects=[...new Set(stuRecs.map(r=>r.subject))].sort();
+  const subRows=subjects.map(sub=>{
+    const sr=stuRecs.filter(r=>r.subject===sub);
+    const p=sr.filter(r=>r.status==='present').length;
+    const t=sr.length;
+    const pct=t>0?Math.round(p/t*100):0;
+    const pc=pct<75?'color:var(--red);font-weight:700':'color:var(--green);font-weight:700';
+    return`<tr><td>${sub}</td><td style="text-align:center">${p}</td><td style="text-align:center">${t}</td>
+      <td style="text-align:center;${pc}">${pct}%</td></tr>`;
+  }).join('');
+
+  out.innerHTML=`<div class="card" id="indRepCard">
+    <div class="stu-rep-header">
+      <div class="stu-rep-av">${ini(stu.name)}</div>
+      <div>
+        <div class="stu-rep-name">${stu.name}</div>
+        <div class="stu-rep-meta">${stu.class} · रोल #${stu.roll}</div>
+        <div class="stu-rep-meta">वार्षिक अहवाल — ${y}</div>
+      </div>
+      <div style="margin-left:auto;text-align:center">
+        <div style="font-size:2rem;font-weight:900;font-family:'Space Mono',monospace;color:${pctColor}">${totalPct}%</div>
+        <div style="font-size:.75rem;color:#888">${totalP}/${totalT} एकूण</div>
+      </div>
+    </div>
+
+    <div style="padding:14px 20px 6px;font-weight:700;font-size:.92rem;border-bottom:1.5px solid var(--border);">📆 महिनानिहाय सारांश</div>
+    <div class="yearly-summary">${monthCards}</div>
+
+    <div style="padding:14px 20px 6px;font-weight:700;font-size:.92rem;border-top:1.5px solid var(--border);border-bottom:1.5px solid var(--border);">📚 विषयनिहाय सारांश</div>
+    <div style="overflow-x:auto;padding:4px 0;">
+      <table class="rep-table" style="min-width:320px;">
+        <thead><tr><th style="text-align:left">विषय</th><th>उपस्थित</th><th>एकूण</th><th>टक्केवारी</th></tr></thead>
+        <tbody>${subRows}</tbody>
+      </table>
+    </div>
+    <div style="padding:9px 20px;font-size:.75rem;color:#888;border-top:1px solid #eee;">
+      🔴 % म्हणजे ७५% पेक्षा कमी उपस्थिती
+    </div>
+  </div>`;
+}
+
+function printIndReport(){
+  const el=document.getElementById('indRepCard');
+  if(!el){showToast('⚠️ आधी अहवाल तयार करा','err');return;}
+  const sid=document.getElementById('indStudent').value;
+  const stu=students.find(s=>s.id==sid);
+  const type=document.getElementById('indType').value;
+  const m=parseInt(document.getElementById('indMonth').value);
+  const y=parseInt(document.getElementById('indYear').value);
+  const title=type==='monthly'
+    ?`${stu.name} — ${MN[m]} ${y}`
+    :`${stu.name} — वार्षिक अहवाल ${y}`;
+  openPrintWindow(title, el.innerHTML, 'portrait');
+}
+
+// ======================== PRINT HELPER ========================
+function openPrintWindow(title, bodyHTML, orient){
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html lang="mr"><head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+      body{font-family:'Noto Sans Devanagari',sans-serif;margin:0;padding:22px;color:#111;font-size:11px;}
+      h1{font-size:15px;margin-bottom:3px;}
+      .sub{font-size:10px;color:#666;margin-bottom:14px;}
+      table{width:100%;border-collapse:collapse;}
+      th,td{border:1px solid #bbb;padding:6px 8px;}
+      th{background:#1a1a2e;color:white;font-size:9px;text-align:center;}
+      th:nth-child(1),th:nth-child(2){text-align:left;}
+      td{text-align:center;font-size:10px;}
+      td:nth-child(1){text-align:left;}
+      td:nth-child(2){text-align:left;font-weight:600;}
+      .p-cell{background:#e8f5e9;color:#2d8a4e;font-weight:600;}
+      .a-cell{background:#fdecea;color:#c0392b;font-weight:600;}
+      .sum-row td{background:#f5f0e8;font-weight:700;}
+      .stu-rep-header{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:2px solid #ddd;margin-bottom:14px;}
+      .stu-rep-av{width:50px;height:50px;border-radius:50%;background:#1a1a2e;color:white;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;}
+      .stu-rep-name{font-size:14px;font-weight:900;}
+      .stu-rep-meta{font-size:10px;color:#777;}
+      .month-section{margin-bottom:14px;}
+      .month-title{font-size:11px;font-weight:700;border-bottom:2px solid #ff6b35;padding-bottom:4px;margin-bottom:7px;display:flex;justify-content:space-between;}
+      .month-grid{display:flex;flex-wrap:wrap;gap:4px;}
+      .day-chip{border-radius:6px;padding:4px 6px;text-align:center;font-size:9px;font-weight:600;}
+      .day-chip.p{background:#e8f5e9;color:#2d8a4e;border:1px solid #a5d6a7;}
+      .day-chip.a{background:#fdecea;color:#c0392b;border:1px solid #ef9a9a;}
+      .date-lbl{font-size:8px;font-weight:400;color:#aaa;display:block;}
+      .yearly-summary{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;}
+      .yr-card{border:1px solid #ddd;border-radius:8px;padding:8px;text-align:center;}
+      .yr-month{font-size:9px;font-weight:700;color:#555;margin-bottom:3px;}
+      .yr-pct{font-size:14px;font-weight:900;}
+      .yr-detail{font-size:8px;color:#888;}
+      .legend{font-size:9px;color:#888;margin-top:10px;}
+      .sign{display:flex;justify-content:space-between;margin-top:36px;font-size:10px;}
+      .footer-print{text-align:center;font-size:9px;color:#aaa;margin-top:20px;border-top:1px solid #eee;padding-top:8px;}
+      @page{margin:1.2cm;size:A4 ${orient};}
+    </style>
+    </head><body>
+    <h1>${title}</h1>
+    <div class="sub">मुद्रण दिनांक: ${new Date().toLocaleDateString('mr-IN')} &nbsp;|&nbsp; सजग शिक्षण</div>
+    ${bodyHTML}
+    <div class="legend">✓/P = उपस्थित &nbsp;|&nbsp; ✗/A = अनुपस्थित &nbsp;|&nbsp; 🔴 % म्हणजे ७५% पेक्षा कमी उपस्थिती</div>
+    <div class="sign">
+      <div>शिक्षकाची सही: _____________________</div>
+      <div>प्राचार्यांची सही: _____________________</div>
+    </div>
+    <div class="footer-print">© Copyright प्रो. डॉ. राहुल हांडे | सजग शिक्षण — विद्यार्थी उपस्थिती व्यवस्थापन प्रणाली | सर्व हक्क राखीव</div>
+    </body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(()=>w.print(),700);
+}
+
+// ======================== CLASS MANAGEMENT ========================
+const DEFAULT_CLASSES = ['FYBA','SYBA','M.A.I','M.A.II'];
+let classes = JSON.parse(localStorage.getItem('ss_classes')||JSON.stringify(DEFAULT_CLASSES));
+
+function saveClasses(){ localStorage.setItem('ss_classes',JSON.stringify(classes)); }
+
+function addClass(){
+  const inp = document.getElementById('newClsName');
+  const name = inp.value.trim().toUpperCase();
+  if(!name){ showToast('⚠️ वर्गाचे नाव भरा','err'); return; }
+  if(classes.includes(name)){ showToast('⚠️ हा वर्ग आधीच आहे','err'); return; }
+  classes.push(name);
+  saveClasses();
+  inp.value='';
+  renderClassUI();
+  showToast(`✅ ${name} वर्ग जोडला!`,'ok');
+}
+
+function removeClass(cls){
+  const cnt = students.filter(s=>s.class===cls).length;
+  const msg = cnt > 0
+    ? `${cls} वर्ग काढायचा का? त्यातील ${cnt} विद्यार्थी व सर्व नोंदी कायमचे काढल्या जातील.`
+    : `${cls} वर्ग काढायचा का?`;
+  if(!confirm(msg)) return;
+  classes = classes.filter(c=>c!==cls);
+  students = students.filter(s=>s.class!==cls);
+  records = records.filter(r=>r.class!==cls);
+  saveClasses(); save();
+  if(addCls===cls) addCls = classes[0]||'';
+  if(viewCls===cls) viewCls = classes[0]||'';
+  renderClassUI();
+  showToast(`🗑️ ${cls} काढला`,'ok');
+}
+
+function renderClassUI(){
+  // Class chips in management card
+  const chips = document.getElementById('classChips');
+  chips.innerHTML = classes.map(c=>`
+    <div style="display:inline-flex;align-items:center;gap:6px;background:var(--light);border:1.5px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.84rem;font-weight:600;">
+      ${c}
+      <button onclick="removeClass('${c}')" style="background:none;border:none;cursor:pointer;color:#ccc;font-size:.85rem;padding:0;line-height:1;" title="${c} काढा">✕</button>
+    </div>`).join('');
+
+  // Add tabs
+  if(!addCls || !classes.includes(addCls)) addCls = classes[0]||'';
+  const addT = document.getElementById('addTabs');
+  addT.innerHTML = classes.map(c=>`
+    <button class="cls-tab ${c===addCls?'active':''}" onclick="setAddCls('${c}',this)">${c}</button>`).join('');
+  document.getElementById('clrLbl').textContent = addCls;
+
+  // View tabs
+  if(!viewCls || !classes.includes(viewCls)) viewCls = classes[0]||'';
+  const viewT = document.getElementById('viewTabs');
+  viewT.innerHTML = classes.map(c=>`
+    <button class="cls-tab ${c===viewCls?'active':''}" onclick="setViewCls('${c}',this)">${c}</button>`).join('');
+
+  // Update all selects
+  const clsOpts = '<option value="">-- वर्ग निवडा --</option>' + classes.map(c=>`<option>${c}</option>`).join('');
+  ['clsSel','rClass','indClass'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el){ const v=el.value; el.innerHTML=clsOpts; el.value=v; }
+  });
+  // Records filter
+  const recEl = document.getElementById('recClass');
+  if(recEl){ const v=recEl.value; recEl.innerHTML='<option value="">सर्व वर्ग</option>'+classes.map(c=>`<option>${c}</option>`).join(''); recEl.value=v; }
+
+  renderStuList();
+}
+
+// ======================== STUDENTS ========================
+function setAddCls(cls,el){
+  addCls=cls;
+  document.getElementById('addTabs').querySelectorAll('.cls-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('clrLbl').textContent=cls;
+}
+
+function setViewCls(cls,el){
+  viewCls=cls;
+  document.getElementById('viewTabs').querySelectorAll('.cls-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderStuList();
+}
+
+function bulkAdd(){
+  const raw=document.getElementById('bulkNames').value.trim();
+  if(!raw){showToast('⚠️ नावे भरा','err');return;}
+  if(!addCls){showToast('⚠️ आधी वर्ग निवडा','err');return;}
+  const start=parseInt(document.getElementById('startRoll').value)||1;
+  const names=raw.split('\n').map(n=>n.trim()).filter(n=>n.length>1);
+  if(!names.length){showToast('⚠️ कोणतेही नाव सापडले नाही','err');return;}
+  let added=0;
+  names.forEach((name,i)=>{
+    const roll=String(start+i);
+    if(!students.find(s=>s.class===addCls&&s.roll===roll)){
+      students.push({id:Date.now()+i+Math.random(),name,roll,class:addCls});
+      added++;
+    }
+  });
+  save();
+  document.getElementById('bulkNames').value='';
+  renderStuList();
+  showToast(`✅ ${added} विद्यार्थी ${addCls} मध्ये जोडले!`,'ok');
+}
+
+function clearClass(){
+  if(!addCls){showToast('⚠️ वर्ग निवडा','err');return;}
+  const cnt=students.filter(s=>s.class===addCls).length;
+  if(!cnt){showToast('⚠️ वर्ग आधीच रिकामा आहे','err');return;}
+  if(!confirm(`${addCls} वर्गातील सर्व ${cnt} विद्यार्थी काढायचे का?`))return;
+  students=students.filter(s=>s.class!==addCls);
+  save();
+  renderStuList();
+  showToast(`🗑️ ${addCls} रिकामा केला`,'ok');
+}
+
+function delStu(id){
+  if(!confirm('हा विद्यार्थी काढायचा का?'))return;
+  students=students.filter(s=>s.id!==id);
+  save();
+  renderStuList();
+  showToast('🗑️ विद्यार्थी काढला','ok');
+}
+
+function renderStuList(){
+  if(!viewCls){ document.getElementById('stuGrid').innerHTML=''; return; }
+  const fl=students.filter(s=>s.class===viewCls).sort((a,b)=>+a.roll-+b.roll);
+  document.getElementById('stuCount').textContent=`${fl.length} विद्यार्थी`;
+  const g=document.getElementById('stuGrid');
+  if(!fl.length){
+    g.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="ico">👥</div><p>${viewCls} मध्ये अजून विद्यार्थी नाहीत</p></div>`;
+    return;
+  }
+  g.innerHTML=fl.map(s=>`
+    <div class="s-card">
+      <div class="av">${ini(s.name)}</div>
+      <div class="info">
+        <div class="name">${s.name}</div>
+        <div class="roll">#${s.roll}</div>
+      </div>
+      <button class="del-btn" onclick="delStu(${s.id})">🗑️</button>
+    </div>`).join('');
+}
+
+// ======================== PRINT SESSION ========================
+function printSession(cls,sub,date,lec){
+  const sessRecs = records.filter(r=>r.class===cls&&r.subject===sub&&r.date===date&&r.lecture===lec)
+    .sort((a,b)=>+a.roll-+b.roll);
+  if(!sessRecs.length){ showToast('⚠️ नोंद सापडली नाही','err'); return; }
+  const present = sessRecs.filter(r=>r.status==='present');
+  const absent  = sessRecs.filter(r=>r.status==='absent');
+  const pct = Math.round(present.length/sessRecs.length*100);
+  const d = date.split('-');
+  const dateStr = `${d[2]}/${d[1]}/${d[0]}`;
+  const college = collegeName ? `<div style="font-size:12px;font-weight:700;margin-bottom:2px;">${collegeName}</div>` : '';
+
+  const rows = sessRecs.map(r=>`
+    <tr>
+      <td>${r.roll}</td>
+      <td>${r.studentName}</td>
+      <td style="text-align:center;${r.status==='present'?'color:#2d8a4e;font-weight:700;':'color:#c0392b;font-weight:700;'}">${r.status==='present'?'✓ उपस्थित':'✗ अनुपस्थित'}</td>
+    </tr>`).join('');
+
+  const w = window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html lang="mr"><head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{font-family:'Noto Sans Devanagari',sans-serif;padding:24px;color:#111;font-size:12px;}
+      .top{border-bottom:3px solid #1a1a2e;padding-bottom:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-end;}
+      .college{font-size:14px;font-weight:900;}
+      .app-name{font-size:10px;color:#888;}
+      h2{font-size:15px;font-weight:900;margin-bottom:4px;}
+      .meta{display:flex;gap:20px;font-size:11px;color:#555;margin-bottom:16px;flex-wrap:wrap;}
+      .meta span{background:#f5f0e8;padding:4px 10px;border-radius:999px;}
+      .summary{display:flex;gap:12px;margin-bottom:16px;}
+      .s-box{flex:1;border:2px solid;border-radius:10px;padding:10px;text-align:center;}
+      .s-box.p{border-color:#2d8a4e;}.s-box.a{border-color:#c0392b;}.s-box.t{border-color:#1a1a2e;}
+      .s-num{font-size:24px;font-weight:900;font-family:'Space Mono',monospace;}
+      .s-lbl{font-size:10px;color:#777;margin-top:2px;}
+      .s-num.p{color:#2d8a4e;}.s-num.a{color:#c0392b;}.s-num.t{color:#1a1a2e;}
+      table{width:100%;border-collapse:collapse;font-size:11px;}
+      th{background:#1a1a2e;color:white;padding:7px 10px;text-align:left;}
+      th:last-child{text-align:center;}
+      td{padding:6px 10px;border-bottom:1px solid #eee;}
+      tr:nth-child(even) td{background:#faf7f2;}
+      .sign{display:flex;justify-content:space-between;margin-top:36px;font-size:11px;border-top:1px solid #ddd;padding-top:14px;}
+      .footer{text-align:center;font-size:9px;color:#bbb;margin-top:18px;}
+      @page{margin:1.5cm;size:A4 portrait;}
+    </style></head><body>
+    <div class="top">
+      <div>
+        ${college}
+        <div class="app-name">सजग शिक्षण — उपस्थिती व्यवस्थापन प्रणाली</div>
+      </div>
+      <div style="text-align:right;font-size:10px;color:#888;">मुद्रण: ${new Date().toLocaleDateString('mr-IN')}</div>
+    </div>
+    <h2>उपस्थिती नोंद — ${cls}</h2>
+    <div class="meta">
+      <span>📅 ${dateStr}</span>
+      <span>📚 ${sub}</span>
+      <span>🕐 ${lec}</span>
+    </div>
+    <div class="summary">
+      <div class="s-box p"><div class="s-num p">${present.length}</div><div class="s-lbl">✅ उपस्थित</div></div>
+      <div class="s-box a"><div class="s-num a">${absent.length}</div><div class="s-lbl">❌ अनुपस्थित</div></div>
+      <div class="s-box t"><div class="s-num t">${sessRecs.length}</div><div class="s-lbl">👥 एकूण</div></div>
+      <div class="s-box t"><div class="s-num t" style="font-size:20px;">${pct}%</div><div class="s-lbl">📈 उपस्थिती</div></div>
+    </div>
+    <table>
+      <thead><tr><th>रोल नं.</th><th>विद्यार्थ्याचे नाव</th><th style="text-align:center;">स्थिती</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="sign">
+      <div>शिक्षकाची सही: _____________________</div>
+      <div>प्राचार्यांची सही: _____________________</div>
+    </div>
+    <div class="footer">© Copyright प्रो. डॉ. राहुल हांडे | सजग शिक्षण | सर्व हक्क राखीव</div>
+    </body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(()=>w.print(), 700);
+}
+
+// ======================== RECORDS PANEL ========================
+function renderRecordsClassFilter(){
+  const sel = document.getElementById('recClass');
+  const v = sel.value;
+  sel.innerHTML = '<option value="">सर्व वर्ग</option>' + classes.map(c=>`<option>${c}</option>`).join('');
+  sel.value = v;
+}
+
+function clearRecFilters(){
+  document.getElementById('recClass').value='';
+  document.getElementById('recDate').value='';
+  document.getElementById('recSubj').value='';
+  renderRecords();
+}
+
+function renderRecords(){
+  const cls = document.getElementById('recClass').value;
+  const date= document.getElementById('recDate').value;
+  const sub = document.getElementById('recSubj').value;
+
+  // Group records by session (class+subject+date+lecture)
+  const sessions = {};
+  records.forEach(r=>{
+    if(cls && r.class!==cls) return;
+    if(date && r.date!==date) return;
+    if(sub && r.subject!==sub) return;
+    const key = `${r.class}||${r.subject}||${r.date}||${r.lecture}`;
+    if(!sessions[key]) sessions[key]={cls:r.class,sub:r.subject,date:r.date,lec:r.lecture,present:0,absent:0,total:0};
+    sessions[key].total++;
+    if(r.status==='present') sessions[key].present++;
+    else sessions[key].absent++;
+  });
+
+  const keys = Object.keys(sessions).sort((a,b)=>{
+    const da=sessions[a].date, db=sessions[b].date;
+    return db.localeCompare(da);
+  });
+
+  const out = document.getElementById('recordsList');
+  if(!keys.length){
+    out.innerHTML='<div class="empty"><div class="ico">📭</div><p>कोणतीही नोंद सापडली नाही</p></div>';
+    return;
+  }
+
+  out.innerHTML = keys.map(key=>{
+    const s=sessions[key];
+    const d=s.date.split('-');
+    const dateStr=`${d[2]}/${d[1]}/${d[0]}`;
+    const pct=s.total>0?Math.round(s.present/s.total*100):0;
+    const pctColor=pct<75?'var(--red)':'var(--green)';
+    return `<div class="card" style="margin-bottom:12px;">
+      <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-weight:700;font-size:.98rem;">${s.cls} &nbsp;·&nbsp; ${s.sub}</div>
+          <div style="font-size:.8rem;color:#888;margin-top:3px;">📅 ${dateStr} &nbsp;·&nbsp; 🕐 ${s.lec}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:900;font-family:'Space Mono',monospace;color:${pctColor}">${pct}%</div>
+            <div style="font-size:.72rem;color:#888;">${s.present}/${s.total}</div>
+          </div>
+          <div style="display:flex;gap:7px;">
+            <div style="background:rgba(45,138,78,.1);color:var(--green);padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700;">✅ ${s.present}</div>
+            <div style="background:rgba(192,57,43,.1);color:var(--red);padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700;">❌ ${s.absent}</div>
+          </div>
+          <button class="btn btn-sm btn-blue" onclick="printSession('${s.cls}','${s.sub}','${s.date}','${s.lec.replace(/'/g,"\\'")}')">🖨️ प्रिंट</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ======================== TIMETABLE SETTINGS ========================
+function addLecture(){
+  const inp = document.getElementById('newLecName');
+  const name = inp.value.trim();
+  if(!name){ showToast('⚠️ तासिकेचे नाव भरा','err'); return; }
+  if(timetable.includes(name)){ showToast('⚠️ ही तासिका आधीच आहे','err'); return; }
+  timetable.push(name);
+  saveTimetable();
+  inp.value='';
+  renderTimetableEditor();
+  renderTimetableSelect();
+  showToast(`✅ "${name}" जोडली!`,'ok');
+}
+
+function editLecture(i,val){
+  timetable[i]=val;
+  saveTimetable();
+  renderTimetableSelect();
+}
+
+function removeLecture(i){
+  if(timetable.length<=1){ showToast('⚠️ किमान एक तासिका असणे आवश्यक आहे','err'); return; }
+  if(!confirm(`"${timetable[i]}" काढायची का?`)) return;
+  timetable.splice(i,1);
+  saveTimetable();
+  renderTimetableEditor();
+  renderTimetableSelect();
+  showToast('🗑️ तासिका काढली','ok');
+}
+
+function resetTimetable(){
+  if(!confirm('मूळ वेळापत्रक परत आणायचे का? सध्याचे बदल जातील.')) return;
+  timetable=[...DEFAULT_TIMETABLE];
+  saveTimetable();
+  renderTimetableEditor();
+  renderTimetableSelect();
+  showToast('↩️ मूळ वेळापत्रक परत आले','ok');
+}
+
+// ======================== SHARE ========================
+function openMoreMenu(){
+  document.getElementById('moreOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMoreMenu(e){
+  document.getElementById('moreOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function switchTabMobile(tab, el){
+  // update top nav too
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  // update top nav active
+  document.querySelectorAll('.nav-tab').forEach(t=>{
+    if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+tab+"'")) t.classList.add('active');
+  });
+  // update bottom nav
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  const bn = document.getElementById('bn-'+tab);
+  if(bn) bn.classList.add('active');
+  // side effects
+  if(tab==='students'){ renderClassUI(); renderStuList(); }
+  if(tab==='individual') { loadIndStudents(); genIndReport(); }
+  if(tab==='records') { renderRecordsClassFilter(); renderRecords(); }
+  if(tab==='settings') { renderTimetableEditor(); document.getElementById('collegeName').value=collegeName; }
+  // scroll top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function shareVia(method){
+  const url = window.location.href;
+  const text = '📚 सजग शिक्षण — विद्यार्थी उपस्थिती व्यवस्थापन प्रणाली\n© प्रो. डॉ. राहुल हांडे\n\n'+url;
+  if(method==='whatsapp'){
+    window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  } else if(method==='email'){
+    window.open('mailto:?subject=सजग शिक्षण ॲप&body='+encodeURIComponent(text),'_blank');
+  } else if(method==='copy'){
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(url).then(()=>{ showToast('🔗 लिंक Copy झाली!','ok'); closeMoreMenu(); });
+    } else { document.execCommand && fallbackCopy(url); }
+  } else if(method==='native'){
+    if(navigator.share){
+      navigator.share({title:'सजग शिक्षण',text:'© प्रो. डॉ. राहुल हांडे — विद्यार्थी उपस्थिती व्यवस्थापन प्रणाली',url})
+        .then(()=>{ showToast('✅ शेअर झाले!','ok'); closeMoreMenu(); })
+        .catch(()=>{});
+    } else { showToast('⚠️ या browser मध्ये native share उपलब्ध नाही','err'); }
+  }
+}
+
+function shareApp(){
+  openMoreMenu();
+}
+
+function ini(name){return name.trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+
+function dlCSV(data,fname){
+  const csv=data.map(r=>r.join(',')).join('\n');
+  const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=fname;
+  a.click();
+  showToast('📥 CSV डाउनलोड सुरू!','ok');
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// Init
+renderClassUI();
+renderTimetableSelect();
+renderStuList();
+</script>
+</body>
+</html>
